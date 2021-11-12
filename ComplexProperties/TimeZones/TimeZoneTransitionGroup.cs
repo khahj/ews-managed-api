@@ -130,6 +130,11 @@ namespace Microsoft.Exchange.WebServices.Data
                     adjustmentRule.DateStart.Year);
                 standardPeriodToSet.Name = standardPeriod.Name;
                 standardPeriodToSet.Bias = standardPeriod.Bias;
+                
+                
+                // Remove period if already exists
+                if (this.timeZoneDefinition.Periods.ContainsKey(standardPeriodToSet.Id))
+                    this.timeZoneDefinition.Periods.Remove(standardPeriodToSet.Id);
                 this.timeZoneDefinition.Periods.Add(standardPeriodToSet.Id, standardPeriodToSet);
 
                 this.transitionToStandard = new TimeZoneTransition(this.timeZoneDefinition, standardPeriodToSet);
@@ -147,6 +152,9 @@ namespace Microsoft.Exchange.WebServices.Data
                 daylightPeriod.Name = TimeZonePeriod.DaylightPeriodName;
                 daylightPeriod.Bias = standardPeriod.Bias - adjustmentRule.DaylightDelta;
 
+                // Remove period if already exists
+                if (this.timeZoneDefinition.Periods.ContainsKey(daylightPeriod.Id))
+                    this.timeZoneDefinition.Periods.Remove(daylightPeriod.Id);
                 this.timeZoneDefinition.Periods.Add(daylightPeriod.Id, daylightPeriod);
 
                 this.transitionToDaylight = TimeZoneTransition.CreateTimeZoneTransition(
@@ -161,6 +169,9 @@ namespace Microsoft.Exchange.WebServices.Data
                     adjustmentRule.DateStart.Year);
                 standardPeriodToSet.Name = standardPeriod.Name;
                 standardPeriodToSet.Bias = standardPeriod.Bias;
+                // Remove period if already exists
+                if (this.timeZoneDefinition.Periods.ContainsKey(standardPeriodToSet.Id))
+                    this.timeZoneDefinition.Periods.Remove(standardPeriodToSet.Id);
                 this.timeZoneDefinition.Periods.Add(standardPeriodToSet.Id, standardPeriodToSet);
 
                 this.transitionToStandard = TimeZoneTransition.CreateTimeZoneTransition(
